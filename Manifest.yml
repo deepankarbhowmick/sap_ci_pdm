@@ -1,0 +1,8 @@
+---
+applications:
+  - name: sappdm
+    timeout: 600
+    memory: 1G
+    instances: 1
+    path: build/libs/sap_pdm-0.1-all.jar
+    buildpack: java_buildpack

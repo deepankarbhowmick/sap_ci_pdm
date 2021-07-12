@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="filter" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;">
+            <h2 style="flex-grow: 1;">Paste the binary-parameter document.</h2>
+        </div>
+        <form id="binary" style="margin-top: 5px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;">
+            <div style="display: contents;">
+                <label for="Pid">partnerId</label>
+                <input type="text" id="Pid" readonly="readonly" name="Pid" th:attr="value=${Pid}"
+                       style="background-color: cadetblue;">
+                <label for="Id">Id</label>
+                <input type="text" id="Id" readonly="readonly" name="Id" th:attr="value=${Id}"
+                       style="background-color: cadetblue;">
+            </div>
+            <label for="Value">Document</label>
+            <textarea id="Value" name="Value" rows="4" cols="50"
+                      style="flex-grow: 10; color: blue; font-size: 12px; resize: none;">
+                [[${Value}]]
+            </textarea>
+            <div class="content_type">
+                <div th:each="contentTypeKey : ${ContentType.keySet()}">
+                    <input type="radio" name="ContentType" th:checked="${ContentType.get(contentTypeKey)}"
+                           th:attr="value=${contentTypeKey},id=${contentTypeKey}">
+                    <label th:attr="for=${contentTypeKey},text=${contentTypeKey}">[[${contentTypeKey}]]</label>
+                </div>
+            </div>
+            <input type="hidden" th:attr="value=${guid}" name="guid">
+            <button data-form_id="binary"
+                    onclick="postData('/uploadBinary', this, 'entity', 'table', event)"
+                    style="align-self: center; margin: 5px;">
+                Select
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

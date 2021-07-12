@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="filter" class="modal">
+    <div class="modal-content">
+        <div style="border-bottom: 1px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;">
+            <h2 style="flex-grow: 1;">Select Partner</h2>
+            <span style="
+            flex-grow: 1;
+            border-left: 1px solid #aaa;
+            padding: 5px;
+            color: red;">
+                By default all the partner are selected
+            </span>
+        </div>
+        <form action="/partner" method="POST" style="margin-top: 5px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;">
+            <div class="partner">
+                <div th:each="eachPartner : ${table.keySet()}" th:attr="class=${eachPartnerStat.even ? 'even' : 'odd'}">
+                    <input type="checkbox" th:attr="name=${eachPartner}" th:checked="${table.get(eachPartner)}">
+                    <span th:text="${eachPartner}"></span>
+                </div>
+            </div>
+            <input type="submit" value="Select" style="align-self: center; margin: 5px;">
+        </form>
+    </div>
+</div>
+</body>
+</html>

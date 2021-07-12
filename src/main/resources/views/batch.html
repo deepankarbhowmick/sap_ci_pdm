@@ -1,0 +1,55 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>SAP PDM</title>
+    <link rel="shortcut icon" th:href="@{static/favicon.ico}" href="static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{static/style.css}" href="static/style.css"/>
+    <script type="text/javascript" th:src="@{static/script.js}" src="static/script.js"></script>
+</head>
+<body style="display: flex; flex-direction: row;">
+<div style="flex-grow: 2; border-right: 1px solid #aaa;">
+    <div>
+        <h2 class="batch_open">
+            Batch "create" progress. Server will transmit details of data load every 1 second. Do not
+            hit the
+            <span class="heading_button">back</span>
+            or the
+            <span class="heading_button">refresh</span>
+            button. To return back to
+            <span class="heading_button">/dashboard</span>
+            hit
+            <span class="heading_button">close</span>
+            button.
+        </h2>
+    </div>
+    <div class="batch" id="batch">
+    </div>
+    <form method="GET" action="/batch/back" class="batch_close">
+        <input type="submit" value="Close">
+    </form>
+</div>
+<div style="flex-grow: 1;" id="progress">
+</div>
+</body>
+<script type="text/javascript">
+        (function() {
+            var eventSource = new EventSource("/batch/sse");
+            eventSource.onmessage = function(event) {
+                let json = JSON.parse(event.data);
+                if(json.result.status){
+                    document.getElementById('batch').innerHTML = json.result.payload;
+                    document.getElementById('progress').innerHTML = json.result.progress;
+                    eventSource.close();
+                }
+                else{
+                    document.getElementById('batch').innerHTML = json.result.payload;
+                    document.getElementById('progress').innerHTML = json.result.progress;
+                }
+            };
+        })();
+
+
+
+</script>
+</html>

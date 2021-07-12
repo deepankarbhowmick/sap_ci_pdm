@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SAP PDM</title>
+    <link rel="shortcut icon" th:href="@{static/favicon.ico}" href="static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{static/style.css}" href="static/style.css"/>
+    <script type="text/javascript" th:src="@{static/script.js}" src="static/script.js"></script>
+</head>
+<body>
+<div class="login">
+    <div class="left">
+        <img src="static/login.jpg" alt="SAP Cloud Integration - Partner Directory Manager" style="max-width: 100%;
+    max-height: 100%;
+    border-radius: 3px;">
+        <div class="text" style="position: absolute;
+    top: 10%;
+    color: white;
+    font-size: inherit;
+    font-weight: bold;">
+            SAP Cloud Integration: Partner Directory Manager
+        </div>
+    </div>
+    <div class="right">
+        <h3 style="border-bottom: 1px solid black;padding: 2px;">Enter Login Credential</h3>
+        <form method="POST" action="/customLogin" style="display: flex; flex-direction: column;">
+            <input type="text" placeholder="s-user id / e-mail id" style="margin-bottom: 2px;" name="username"
+                   th:attr="value=${model.get('username')}">
+            <input type="password" placeholder="password" style="margin-bottom: 2px;" name="password"
+                   th:attr="value=${model.get('password')}">
+            <select name="tmn">
+                <option value="" selected="" disabled="" hidden="">
+                    Select Tenant
+                </option>
+                <option th:each="eachTenant : ${tenant}" th:text="${eachTenant}" th:attr="value=${eachTenant}">
+                    Tenant
+                </option>
+            </select>
+            <div>
+                <input type="checkbox" text="Remember me" style="margin-bottom: 2px;" name="remember">Remember Me
+            </div>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+<div th:if="${message != null}" th:text="${message}" class="loginError">Error
+</div>
+</body>
+</html>

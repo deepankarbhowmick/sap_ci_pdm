@@ -1,0 +1,79 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>SAP PDM</title>
+    <link rel="shortcut icon" th:href="@{static/favicon.ico}" href="static/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{static/style.css}" href="static/style.css"/>
+    <script type="text/javascript" th:src="@{static/script.js}" src="static/script.js"></script>
+</head>
+<body>
+<div class="main">
+    <form class="form">
+        <div class="select_entity">
+            <div style="font-weight: bold;">
+                Select Entity
+            </div>
+            <div>
+                <select name="entity" id="entity">
+                    <option value="">- Entity -</option>
+                    <option value="StringParameters">String parameters</option>
+                    <option value="BinaryParameters">Binary parameters</option>
+                    <option value="AlternativePartners">Alternate Partners</option>
+                    <option value="AuthorizedUsers">Authorized Users</option>
+                </select>
+            </div>
+        </div>
+        <div class="operation">
+            <div style="font-weight: bold;">Operation
+            </div>
+            <div>
+                <input type="button" value="Query" onclick="getData('/query', ['entity'], 'table');">
+                <input type="button" value="Create" onclick="getData('/newRow', ['entity'], 'table');">
+                <input type="button" value="Filter" onclick="getData('/filter', [], 'table');">
+            </div>
+        </div>
+        <div class="cutover">
+            <div style="font-weight: bold;">
+                Cutover Activity
+            </div>
+            <div>
+                <input type="submit" value="Download" formaction="/download" formmethod="GET">
+                <input type="file" name="cutover" style="width: 200px;">
+                <input type="checkbox" name="header" checked="checked">First line header
+                <input type="submit" value="Upload" formaction="/upload" formmethod="POST"
+                       formenctype="multipart/form-data">
+                <input type="submit" value="Batch" formmethod="POST" formaction="/redirectBatch">
+            </div>
+        </div>
+        <div class="user_login">
+            <div style="font-weight: bold;text-align: right; color: blue; font-size: larger;">
+                SAP Partner Directory Manager
+            </div>
+            <div style="font-weight: bold; text-align: right;" th:text="'Welcome ' + ${userName}">
+                Welcome
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: center;align-items: center;">
+                <div style="flex-grow: 1; flex-basis: 50%; justify-content: center; display: flex;">
+                    <h4 style="border: 1px solid #aaa; margin: 2px; padding: 5px; border-radius: 10px;
+                    background-color: palegreen;" th:text="${system}"></h4>
+                </div>
+                <div style="flex-grow: 1; flex-basis: 50%; justify-content: flex-end; display: flex;">
+                    <input type="submit" value="Logout" formaction="/customLogout" formmethod="POST">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div hidden="true" id="spinner">
+        <div style="display: flex; justify-content: center;">
+            <img th:src="@{static/spinner.gif}" src="static/spinner.gif">
+        </div>
+    </div>
+    <div id="table"
+         style="flex-grow: 1; display: flex; flex-direction: column; justify-content: stretch; align-content: stretch;">
+        <div th:replace="~{components/table :: inlineTable}"></div>
+        <div th:replace="~{components/error :: inlineError}"></div>
+    </div>
+</div>
+</body>
+</html>

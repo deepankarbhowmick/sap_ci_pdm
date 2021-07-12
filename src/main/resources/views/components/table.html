@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="table" th:if="${table != null}" id="result" th:fragment="inlineTable" th:with="special=${special}">
+    <div class="message" th:text="${message}"></div>
+    <table>
+        <tr th:each="eachResult : ${table}" th:with="guid=${eachResult.get('guid')}">
+            <td>
+                <form th:switch="${eachResultStat.count}" th:attr="name=${guid}">
+                    <div th:case="1" style="display: flex;">
+                        <div th:each="key : ${eachResult.keySet()}" class="table_cell" style="margin: 2px;">
+                            <span class="table_heading" th:text="${key}"
+                                  th:unless="${key == 'guid' or key == 'ContentType'}"></span>
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/showBinary', this, 'entity', 'table', event)"
+                                    style="width: 70px;"
+                                    th:if="${#bools.isTrue(special) and key == 'Value'}">
+                                Action
+                            </button>
+                            <input type="text" th:attr="name=${key},value=${eachResult.get(key)}"
+                                   th:if="${#bools.isFalse(special) and key == 'Value'}">
+                            <input type="text" th:attr="name=${key},value=${eachResult.get(key)}"
+                                   th:readonly="${#arrays.contains(readOnly, key)}"
+                                   th:unless="${key == 'guid' or key == 'ContentType' or key == 'Value'}">
+                        </div>
+                        <div class="table_cell" style="margin: 2px;">
+                            <span class="table_heading">Upsert</span>
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/upsert', this, 'entity', 'table', event)"
+                                    style="width: 70px;">
+                                Upsert
+                            </button>
+                        </div>
+                        <div class="table_cell" style="margin: 2px;">
+                            <span class="table_heading">Delete</span>
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/delete', this, 'entity', 'table', event)"
+                                    style="width: 70px;">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <div th:case="*" style="display: flex;">
+                        <div th:each="key : ${eachResult.keySet()}" class="table_cell" style="margin: 2px;">
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/showBinary', this, 'entity', 'table', event)"
+                                    style="width: 70px;"
+                                    th:if="${#bools.isTrue(special) and key == 'Value'}">
+                                Action
+                            </button>
+                            <input type="text" th:attr="name=${key},value=${eachResult.get(key)}"
+                                   th:if="${#bools.isFalse(special) and key == 'Value'}">
+                            <input type="text" th:attr="name=${key},value=${eachResult.get(key)}"
+                                   th:readonly="${#arrays.contains(readOnly, key)}"
+                                   th:unless="${key == 'guid' or key == 'ContentType' or key == 'Value'}">
+                        </div>
+                        <div class="table_cell" style="margin: 2px;">
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/upsert', this, 'entity', 'table', event)"
+                                    style="width: 70px;">
+                                Upsert
+                            </button>
+                        </div>
+                        <div class="table_cell" style="margin: 2px;">
+                            <button th:data-form_id="${guid}"
+                                    onclick="postData('/delete', this, 'entity', 'table', event)"
+                                    style="width: 70px;">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" th:attr="value=${guid}" name="guid">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

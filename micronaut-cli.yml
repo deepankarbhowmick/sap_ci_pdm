@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.example
+testFramework: junit
+sourceLanguage: groovy
+buildTool: gradle
+features: [app-name, gradle, groovy, groovy-application, http-client, junit, logback, netty-server, readme, security, security-annotations, security-session, shade, views-thymeleaf, yaml]

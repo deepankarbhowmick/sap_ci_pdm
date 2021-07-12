@@ -1,0 +1,107 @@
+micronaut:
+  application:
+    name: sap_pdm
+  http:
+    client:
+      read-timeout: 15m
+  security:
+    enabled: true
+    intercept-url-map:
+      - pattern: /static/*
+        http-method: GET
+        access:
+          - isAnonymous()
+    authentication: session
+    authentication-provider-strategy: ANY
+    redirect:
+      login-success: '/dashboard'
+    endpoints:
+      logout:
+        enabled: true
+      login:
+        enabled: true
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: /static/**
+        paths:
+          - classpath:static
+  sap:
+    entity:
+      - 'StringParameters'
+      - 'BinaryParameters'
+      - 'AuthorizedUsers'
+      - 'AlternativePartners'
+    keyField:
+      - AlternativePartners:
+          - 'Hexagency'
+          - 'Hexscheme'
+          - 'Hexid'
+      - BinaryParameters:
+          - 'Pid'
+          - 'Id'
+      - AuthorizedUsers:
+          - 'User'
+      - StringParameters:
+          - 'Pid'
+          - 'Id'
+    readOnly:
+      - 'CreatedTime'
+      - 'CreatedBy'
+      - 'LastModifiedTime'
+      - 'LastModifiedBy'
+      - 'Hexagency'
+      - 'Hexscheme'
+      - 'Hexid'
+    tenant:
+      dev: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
+      qua: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
+      prd: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
+    field-list:
+      stringparameters:
+        - 'Pid'
+        - 'Id'
+        - 'LastModifiedBy'
+        - 'LastModifiedTime'
+        - 'CreatedBy'
+        - 'CreatedTime'
+        - 'Value'
+        - 'guid'
+      binaryparameters:
+        - 'Pid'
+        - 'Id'
+        - 'LastModifiedBy'
+        - 'LastModifiedTime'
+        - 'CreatedBy'
+        - 'CreatedTime'
+        - 'ContentType'
+        - 'Value'
+        - 'guid'
+      alternativepartners:
+        - 'Hexagency'
+        - 'Hexscheme'
+        - 'Hexid'
+        - 'Agency'
+        - 'Scheme'
+        - 'Pid'
+        - 'Id'
+        - 'LastModifiedBy'
+        - 'LastModifiedTime'
+        - 'CreatedBy'
+        - 'CreatedTime'
+        - 'guid'
+      authorizedusers:
+        - 'User'
+        - 'Pid'
+        - 'LastModifiedBy'
+        - 'LastModifiedTime'
+        - 'CreatedBy'
+        - 'CreatedTime'
+        - 'guid'
+      filetype:
+        - 'xml'
+        - 'xsl'
+        - 'xsd'
+        - 'json'
+        - 'text'
