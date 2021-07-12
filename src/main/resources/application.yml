@@ -55,9 +55,9 @@ micronaut:
       - 'Hexscheme'
       - 'Hexid'
     tenant:
-      dev: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
-      qua: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
-      prd: 'https://0f54f8actrial.it-cpitrial02.cfapps.eu10-001.hana.ondemand.com'
+      dev: 'your_tenant_tmn_url'
+      qua: 'your_tenant_tmn_url'
+      prd: 'your_tenant_tmn_url'
     field-list:
       stringparameters:
         - 'Pid'
